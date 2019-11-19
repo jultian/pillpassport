@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "962939525834",
+    "firebase_url": "https://pillpassport.firebaseio.com",
+    "project_id": "pillpassport",
+    "storage_bucket": "pillpassport.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:962939525834:android:6d1b508925e8639340f233",
+        "android_client_info": {
+          "package_name": "com.example.pillpassport"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "962939525834-dec91a4nmja99he5eeatar26cn153q5k.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBCwt7AL5DcI3YRtY7S4qgHDLiaRMTpjH8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "962939525834-dec91a4nmja99he5eeatar26cn153q5k.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
