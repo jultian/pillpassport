@@ -22,7 +22,7 @@
     <ImageView
         android:id="@+id/scanner"
         android:layout_width="match_parent"
-        android:layout_height="255dp"
+        android:layout_height="693dp"
         android:background="#3870ED"
         android:onClick="startScan" />
 
