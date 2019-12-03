@@ -7,19 +7,11 @@
 
     <ImageView
         android:id="@+id/labelPic"
-        android:layout_width="match_parent"
+        android:layout_width="fill_parent"
         android:layout_height="291dp"
+        android:adjustViewBounds="false"
+        android:scaleType="fitCenter"
         tools:srcCompat="@tools:sample/backgrounds/scenic[5]" />
-
-    <TextView
-        android:id="@+id/info"
-        android:layout_width="match_parent"
-        android:layout_height="334dp"
-        android:background="#3870ED"
-        android:text="PRESCRIPTION NAME:"
-        android:textAlignment="viewStart"
-        android:textColor="#FFFFFF"
-        android:textSize="24sp" />
 
     <Button
         android:id="@+id/read"
@@ -36,4 +28,14 @@
         android:background="#8BC34A"
         android:onClick="translateInfo"
         android:text="Translate" />
+
+    <TextView
+        android:id="@+id/info"
+        android:layout_width="match_parent"
+        android:layout_height="334dp"
+        android:background="#3870ED"
+        android:text="PRESCRIPTION NAME:"
+        android:textAlignment="viewStart"
+        android:textColor="#FFFFFF"
+        android:textSize="24sp" />
 </LinearLayout>

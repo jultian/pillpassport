@@ -38,9 +38,12 @@ public class MainActivity extends AppCompatActivity {
 
     private static final int PICTURE_REQUEST = 1;
     static final String PICTURE_NAME = "picture";
+    static final String PICTURE_TEXT = "text";
+
 
 
     private ImageView mImageView;
+    private Intent mIntent;
 
     private FirebaseVisionTextRecognizer detector;
 
@@ -84,9 +87,9 @@ public class MainActivity extends AppCompatActivity {
                 bm.compress(Bitmap.CompressFormat.PNG, 100, stream);
                 byte[] byteArray = stream.toByteArray();
 
-                Intent intent = new Intent(this, PillContentActivity.class);
-                intent.putExtra(PICTURE_NAME, byteArray);
-                startActivity(intent);
+                mIntent = new Intent(this, PillContentActivity.class);
+                mIntent.putExtra(PICTURE_NAME, byteArray);
+//                startActivity(intent);
 
                 FirebaseVisionImage image = FirebaseVisionImage.fromBitmap(bm);
 
@@ -96,25 +99,26 @@ public class MainActivity extends AppCompatActivity {
                                     @Override
                                     public void onSuccess(FirebaseVisionText firebaseVisionText) {
                                         // Task completed successfully
+                                        processTextBlock(firebaseVisionText);
+
                                         // ...
                                         log("Success");
                                         Toast.makeText(MainActivity.this, "success!!", Toast.LENGTH_LONG).show();
 
-
                                         // In the documentation
-                                        /*
-                                        for (FirebaseVisionText.TextBlock block : firebaseVisionText.getTextBlocks()) {
-                                            Rect boundingBox = block.getBoundingBox();
-                                            Point[] cornerPoints = block.getCornerPoints();
-                                            String text = block.getText();
 
-                                            for (FirebaseVisionText.Line line: block.getLines()) {
-                                                // ...
-                                                for (FirebaseVisionText.Element element: line.getElements()) {
-                                                    // ...
-                                                }
-                                            }
-                                        } */
+//                                        for (FirebaseVisionText.TextBlock block : firebaseVisionText.getTextBlocks()) {
+//                                            Rect boundingBox = block.getBoundingBox();
+//                                            Point[] cornerPoints = block.getCornerPoints();
+//                                            String text = block.getText();
+//
+//                                            for (FirebaseVisionText.Line line: block.getLines()) {
+//                                                // ...
+//                                                for (FirebaseVisionText.Element element: line.getElements()) {
+//                                                    // ...
+//                                                }
+//                                            }
+//                                        }
 
                                     }
                                 })
@@ -134,8 +138,16 @@ public class MainActivity extends AppCompatActivity {
 
     private void processTextBlock(FirebaseVisionText result) {
         String resultText = result.getText();
+        log(resultText);
+        // TODO: pass into PillContectActivity
+        mIntent.putExtra(PICTURE_TEXT, resultText);
+        startActivity(mIntent);
+
         for (FirebaseVisionText.TextBlock block: result.getTextBlocks()) {
             String blockText = block.getText();
+            // Each blockText is a line
+//            Toast.makeText(MainActivity.this, blockText, Toast.LENGTH_LONG).show();
+
             Float blockConfidence = block.getConfidence();
             List<RecognizedLanguage> blockLanguages = block.getRecognizedLanguages();
             Point[] blockCornerPoints = block.getCornerPoints();
