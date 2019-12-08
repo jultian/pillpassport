@@ -33,6 +33,9 @@ public class PillContentActivity extends AppCompatActivity {
 
     private Bitmap picture;
 
+    static final String TEXT_TO_TRANSLATE = "text";
+
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -51,7 +54,7 @@ public class PillContentActivity extends AppCompatActivity {
 
         mTextView.setText(drug_info);
 
-        translateInfo();
+//        translateInfo();
 
         mImageView.setImageBitmap(picture);
 //        mImageView.setAdjustViewBounds(true);
@@ -65,61 +68,15 @@ public class PillContentActivity extends AppCompatActivity {
 
     }
 
-    public void translateInfo() {
+    public void translateInfo(View view) {
 
-        FirebaseTranslatorOptions options =
-                new FirebaseTranslatorOptions.Builder()
-                        .setSourceLanguage(FirebaseTranslateLanguage.EN)
-                        .setTargetLanguage(FirebaseTranslateLanguage.DE)
-                        .build();
-        final FirebaseTranslator englishGermanTranslator =
-                FirebaseNaturalLanguage.getInstance().getTranslator(options);
 
-        FirebaseModelDownloadConditions conditions = new FirebaseModelDownloadConditions.Builder()
-                .requireWifi()
-                .build();
 
-        englishGermanTranslator.downloadModelIfNeeded(conditions)
-                .addOnSuccessListener(
-                        new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void v) {
-                                // Model downloaded successfully. Okay to start translating.
-                                // (Set a flag, unhide the translation UI, etc.)
-                                Log.d("SUCCESS", "success1");
-                                Toast.makeText(PillContentActivity.this, "translation can start", Toast.LENGTH_SHORT).show();
-                                englishGermanTranslator.translate(drug_info)
-                                        .addOnSuccessListener(
-                                                new OnSuccessListener<String>() {
-                                                    @Override
-                                                    public void onSuccess(@NonNull String translatedText) {
-                                                        // Translation successful.
 
-                                                        Log.d("TRANSLATED", "TRANSLATED TEXT: "  + translatedText);
-                                                    }
-                                                })
-                                        .addOnFailureListener(
-                                                new OnFailureListener() {
-                                                    @Override
-                                                    public void onFailure(@NonNull Exception e) {
-                                                        // Error.
-                                                        // ...
+        Intent intent = new Intent(this, TranslationActivity.class);
+        intent.putExtra(TEXT_TO_TRANSLATE, drug_info);
+        startActivity(intent);
 
-                                                        Log.d("FAIL", "failedHereToo");
-                                                    }
-                                                });
-                            }
-                        })
-                .addOnFailureListener(
-                        new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                // Model couldn’t be downloaded or other internal error.
-                                // ...
 
-                                Log.d("FAIL", "failed");
-                                Toast.makeText(PillContentActivity.this, "failed", Toast.LENGTH_SHORT).show();
-                            }
-                        });
     }
 }
