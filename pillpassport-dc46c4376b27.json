@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "pillpassport",
+  "private_key_id": "dc46c4376b27af468605bae6626a068f588bfcf6",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCwO4eUp9FaOfxJ\nwqmLhga6mzrZ101ISgPSp3bLJt+53BHOSdXEGltSRtHReNX2vIM0u9yB7+09OVtY\nC3D7VapOetDFbtopd5XEi6lMgPu5nZYxIrQwxfip6vOjBvej0HVqQF9gwWQTl6TG\nfwSrLwkIBvA2hET4peqifulSSIva1VjvW78woBl4ZrV977boeWvD4z4DyXjkA4dY\n9ewxwoK51UEi5wz3A8LslciLso4H/drO285Y2P5wiq+bhJUyNV2HmXsLdb0VrpEN\nP3Xxv7Jw3FF09gAc+wnm4c0rf2fFaVKRouXfw7lLIEXwWXbsFd2D/TUgbhKm5TdU\nvKOoMIxZAgMBAAECggEAERglJZlFqF/ZhfoY4gzFGFK4WasVtv5e8o8F6dzCdM/Q\n9laZIqV/2DJAZfY3ovBUNchHMl9ofrjSkG7Drc14cJZfK9d91+neoCr/6AjW4gFU\nMT3xho2dejXtHhIt8TjmOsE1vzfjEjdyZ0Ko3EX6tUmfAVrBKfFGGi7/SNj6n+ZK\ntPFYTXomOwT9QmzlHzcdWXBzPP/CVNqSFIiaiL1z+V5TOusgLyax3wIY3N6KesUu\nbjID1VXhOZcFOEDIdExuqahpVEkjBGRZ/eGkvtWusX+YFNOyllD3/nMiB7+clAfg\npTyy9t2OCV0cPenvjyNJNFg+TAPy/H5kC2OPZYmExQKBgQDdiVZncqPRY96JoyRl\n7r3fTjWhyDoUlzNn0l08TuR6JEUbXgB2JPzNpoySlX3RIdCOORv2/icSxNCYE9dk\nSveAgxuoE3AzOZ/oeqOf813OCh/pK7lTH6Vvw7+ua/+4fczCTp/qRflz6LbZvgdZ\nmbzsjIQHFfFtdohcolkd2kagBwKBgQDLpffsOhTHIIYQ5Z7qhdMLP9gwc1XAVXmf\n53W6vtNfk2qr+yvPY7DRhnhc3U1zMQNo4UduWtPOS24b6JFBSkWELVKnkcGCY2RM\nbJumS0gtpWz4cBEWGF+ykIsWDeuEH8QAXtMiHe/tjr5o0Bf8LRAomGBjOlvTHqsy\n+pHNXHmYnwKBgAovVzaYUam9wqxnQLQi/r22dcbDUtBBh059oGW2ZtCqvDae4ryL\nxMeboZjXoJotyM3RGFUJqDg3rjNfriZhP/G7lVjr09u3CYABq2YeJTDkzETHCtUk\nflGeGUDmnDIaLoC8ZqO5pddLWqS2FNZst//UEfnVa20R5wEDQb+ammafAoGAcRJB\nyaOmDbn9NjyIM+cB+ukD/ELNhfDvit1U/M8fRZ3wSHU5KflMH8nt4oHtktvP7NfI\ndXlwyMYQ6OYEYKAAYRdZITlInEDbW6Oh+H8sIEwNaROwKPh3igm/cAtijQWmKh58\nVCETKm9rQX7pEldi9WdFfVLV0S7iF3gQpFmIGjkCgYEApa+ttwSnrjsgtNQXVOzH\ndKTRbSgsHP2E8OFVoTrO7XazpYU43ljPjXTOsQC5cxk8Tu6vri478M3jHS7fXbEp\ni2ohlWdhGm8CPXPcQdwSBS4LbY/rsdVfFkM3zL8X+PSnkKWb84O5NIWik5udCkCy\nzLFcFkNhs4HJWSbgkjUFqAc=\n-----END PRIVATE KEY-----\n",
+  "client_email": "pillpassport-admin@pillpassport.iam.gserviceaccount.com",
+  "client_id": "113213377618631505477",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/pillpassport-admin%40pillpassport.iam.gserviceaccount.com"
+}

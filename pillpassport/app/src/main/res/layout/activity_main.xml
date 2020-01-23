@@ -1,29 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/holo_green_light"
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <TextView
-        android:id="@+id/app"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#3870ED"
-        android:text="Pill Passport"
-        android:textAlignment="center"
-        android:textAllCaps="true"
-        android:textColor="#FFFFFF"
-        android:textSize="24sp"
-        app:drawableTint="#3870ED" />
-
     <ImageView
         android:id="@+id/scanner"
-        android:layout_width="match_parent"
-        android:layout_height="693dp"
-        android:background="#3870ED"
-        android:onClick="startScan" />
+        android:layout_width="419dp"
+        android:layout_height="546dp"
+        android:onClick="startScan"
+        app:layout_constraintBottom_toTopOf="@+id/app"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@android:color/holo_green_light" />
 
-</LinearLayout>
+    <ImageView
+        android:id="@+id/camera"
+        android:layout_width="115dp"
+        android:layout_height="95dp"
+        android:layout_marginTop="224dp"
+        android:layout_marginBottom="226dp"
+        app:layout_constraintBottom_toTopOf="@+id/app"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/camera" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/app"
+        android:layout_width="420dp"
+        android:layout_height="183dp"
+        android:background="#4CAF50"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.6"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TextView
+            android:id="@+id/appName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Pill Passport"
+            android:textColor="@android:color/white"
+            android:textSize="36sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.502"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/app" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

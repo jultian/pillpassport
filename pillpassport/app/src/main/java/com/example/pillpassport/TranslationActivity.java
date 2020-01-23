@@ -13,7 +13,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-
+import android.speech.tts.TextToSpeech;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.ml.common.modeldownload.FirebaseModelDownloadConditions;
@@ -21,13 +21,20 @@ import com.google.firebase.ml.naturallanguage.FirebaseNaturalLanguage;
 import com.google.firebase.ml.naturallanguage.translate.FirebaseTranslateLanguage;
 import com.google.firebase.ml.naturallanguage.translate.FirebaseTranslator;
 import com.google.firebase.ml.naturallanguage.translate.FirebaseTranslatorOptions;
+import java.util.Locale;
 
 public class TranslationActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
 
     private String drug_info;
     private TextView translated_textview;
+    private TextView mOriginalInfo;
+    private String item_selected;
+    static TextToSpeech eng;
+    static TextToSpeech jap;
+    static TextToSpeech ger;
 
+    private String mtranslatedText;
 
 
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -45,16 +52,39 @@ public class TranslationActivity extends AppCompatActivity implements AdapterVie
 
         // Apply the adapter to the spinner
         spinner.setAdapter(adapter);
-
         spinner.setOnItemSelectedListener(this);
-
-
 
         Intent intent = getIntent();
         drug_info = intent.getStringExtra(PillContentActivity.TEXT_TO_TRANSLATE);
+//        Toast.makeText(TranslationActivity.this, drug_info, Toast.LENGTH_SHORT).show();
 
+        mOriginalInfo = findViewById(R.id.originalInfo);
+        mOriginalInfo.setText(drug_info);
 
-
+        eng = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int i) {
+                if ( i != TextToSpeech.ERROR) {
+                    eng.setLanguage(Locale.US);
+                }
+            }
+        });
+        jap = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int i) {
+                if ( i != TextToSpeech.ERROR) {
+                    jap.setLanguage(new Locale("ja","JP"));
+                }
+            }
+        });
+        ger = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int i) {
+                if ( i != TextToSpeech.ERROR) {
+                    ger.setLanguage(new Locale("de","DE"));
+                }
+            }
+        });
 
     }
 
@@ -63,14 +93,10 @@ public class TranslationActivity extends AppCompatActivity implements AdapterVie
         // An item was selected. You can retrieve the selected item using
         // parent.getItemAtPosition(pos)
 
-        Log.d("TRANSLATION" , "item selected: " + parent.getItemAtPosition(pos).toString());
+        Log.d("TRANSLATION", "item selected: " + parent.getItemAtPosition(pos).toString());
+        item_selected = parent.getItemAtPosition(pos).toString();
 
-        String item_selected = parent.getItemAtPosition(pos).toString();
-
-
-
-
-        translated_textview = findViewById(R.id.textView);
+        translated_textview = findViewById(R.id.translation);
 
         if (item_selected.equals("English")) {
             translated_textview.setText(drug_info);
@@ -93,18 +119,13 @@ public class TranslationActivity extends AppCompatActivity implements AdapterVie
                             new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void v) {
-                                    Log.d("SUCCESS", "success1");
-                                    Toast.makeText(TranslationActivity.this, "translation can start", Toast.LENGTH_SHORT).show();
                                     englishSpanishTranslator.translate(drug_info)
                                             .addOnSuccessListener(
                                                     new OnSuccessListener<String>() {
                                                         @Override
                                                         public void onSuccess(@NonNull String translatedText) {
                                                             // Translation successful.
-
-                                                            Log.d("TRANSLATED", "TRANSLATED TEXT: "  + translatedText);
-
-
+                                                            mtranslatedText = translatedText;
                                                             translated_textview.setText(translatedText);
                                                         }
                                                     })
@@ -115,7 +136,6 @@ public class TranslationActivity extends AppCompatActivity implements AdapterVie
                                                             // Error.
                                                             // ...
 
-                                                            Log.d("FAIL", "failedHereToo");
                                                         }
                                                     });
                                 }
@@ -126,9 +146,6 @@ public class TranslationActivity extends AppCompatActivity implements AdapterVie
                                 public void onFailure(@NonNull Exception e) {
                                     // Model couldn’t be downloaded or other internal error.
                                     // ...
-
-                                    Log.d("FAIL", "failed");
-                                    Toast.makeText(TranslationActivity.this, "failed", Toast.LENGTH_SHORT).show();
                                 }
                             });
 
@@ -155,18 +172,13 @@ public class TranslationActivity extends AppCompatActivity implements AdapterVie
                                 public void onSuccess(Void v) {
                                     // Model downloaded successfully. Okay to start translating.
                                     // (Set a flag, unhide the translation UI, etc.)
-                                    Log.d("SUCCESS", "success1");
-                                    Toast.makeText(TranslationActivity.this, "translation can start", Toast.LENGTH_SHORT).show();
                                     englishJapaneseTranslator.translate(drug_info)
                                             .addOnSuccessListener(
                                                     new OnSuccessListener<String>() {
                                                         @Override
                                                         public void onSuccess(@NonNull String translatedText) {
                                                             // Translation successful.
-
-                                                            Log.d("TRANSLATED", "TRANSLATED TEXT: "  + translatedText);
-
-
+                                                            mtranslatedText = translatedText;
                                                             translated_textview.setText(translatedText);
                                                         }
                                                     })
@@ -176,8 +188,6 @@ public class TranslationActivity extends AppCompatActivity implements AdapterVie
                                                         public void onFailure(@NonNull Exception e) {
                                                             // Error.
                                                             // ...
-
-                                                            Log.d("FAIL", "failedHereToo");
                                                         }
                                                     });
                                 }
@@ -188,9 +198,6 @@ public class TranslationActivity extends AppCompatActivity implements AdapterVie
                                 public void onFailure(@NonNull Exception e) {
                                     // Model couldn’t be downloaded or other internal error.
                                     // ...
-
-                                    Log.d("FAIL", "failed");
-                                    Toast.makeText(TranslationActivity.this, "failed", Toast.LENGTH_SHORT).show();
                                 }
                             });
 
@@ -211,61 +218,64 @@ public class TranslationActivity extends AppCompatActivity implements AdapterVie
                     .build();
 
             englishGermanTranslator.downloadModelIfNeeded(conditions)
-                .addOnSuccessListener(
-                        new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void v) {
-                                // Model downloaded successfully. Okay to start translating.
-                                // (Set a flag, unhide the translation UI, etc.)
-                                Log.d("SUCCESS", "success1");
-                                Toast.makeText(TranslationActivity.this, "translation can start", Toast.LENGTH_SHORT).show();
-                                englishGermanTranslator.translate(drug_info)
-                                        .addOnSuccessListener(
-                                                new OnSuccessListener<String>() {
-                                                    @Override
-                                                    public void onSuccess(@NonNull String translatedText) {
-                                                        // Translation successful.
-
-                                                        Log.d("TRANSLATED", "TRANSLATED TEXT: "  + translatedText);
-
-
-                                                        translated_textview.setText(translatedText);
-                                                    }
-                                                })
-                                        .addOnFailureListener(
-                                                new OnFailureListener() {
-                                                    @Override
-                                                    public void onFailure(@NonNull Exception e) {
-                                                        // Error.
-                                                        // ...
-
-                                                        Log.d("FAIL", "failedHereToo");
-                                                    }
-                                                });
-                            }
-                        })
-                .addOnFailureListener(
-                        new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                // Model couldn’t be downloaded or other internal error.
-                                // ...
-
-                                Log.d("FAIL", "failed");
-                                Toast.makeText(TranslationActivity.this, "failed", Toast.LENGTH_SHORT).show();
-                            }
-                        });
-    }
-
-
-
-
-
+                    .addOnSuccessListener(
+                            new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void v) {
+                                    // Model downloaded successfully. Okay to start translating.
+                                    // (Set a flag, unhide the translation UI, etc.)
+                                    englishGermanTranslator.translate(drug_info)
+                                            .addOnSuccessListener(
+                                                    new OnSuccessListener<String>() {
+                                                        @Override
+                                                        public void onSuccess(@NonNull String translatedText) {
+                                                            // Translation successful.
+                                                            mtranslatedText = translatedText;
+                                                            translated_textview.setText(translatedText);
+                                                        }
+                                                    })
+                                            .addOnFailureListener(
+                                                    new OnFailureListener() {
+                                                        @Override
+                                                        public void onFailure(@NonNull Exception e) {
+                                                            // Error.
+                                                            // ...
+                                                        }
+                                                    });
+                                }
+                            })
+                    .addOnFailureListener(
+                            new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    // Model couldn’t be downloaded or other internal error.
+                                    // ...
+                                }
+                            });
+        }
     }
 
     public void onNothingSelected(AdapterView<?> parent) {
         // Another interface callback
-
-        Log.d("TRANSLATION", "nothing selected");
     }
+
+    public void readTranslation(View view) {
+        if (item_selected.equals("English")) {
+            eng.speak(drug_info, TextToSpeech.QUEUE_ADD, null);
+        } else if (item_selected.equals("Spanish")) {
+            eng.speak(mtranslatedText, TextToSpeech.QUEUE_ADD, null);
+        } else if (item_selected.equals("Japanese")) {
+            jap.speak(mtranslatedText, TextToSpeech.QUEUE_ADD, null);
+        } else if (item_selected.equals("German")) {
+            ger.speak(mtranslatedText, TextToSpeech.QUEUE_ADD, null);
+        }
+    }
+
+//    public void onPause() {
+//        if (t1 != null) {
+//            t1.stop();
+//            t1.shutdown();
+//        }
+//        super.onPause();
+//    }
 }
