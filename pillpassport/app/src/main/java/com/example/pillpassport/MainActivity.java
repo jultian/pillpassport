@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.os.Bundle;
@@ -20,13 +21,11 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.ml.vision.FirebaseVision;
 import com.google.firebase.ml.vision.common.FirebaseVisionImage;
-import com.google.firebase.ml.vision.text.FirebaseVisionCloudTextRecognizerOptions;
 import com.google.firebase.ml.vision.text.FirebaseVisionText;
 import com.google.firebase.ml.vision.text.FirebaseVisionTextRecognizer;
 import com.google.firebase.ml.vision.text.RecognizedLanguage;
 
 import java.io.ByteArrayOutputStream;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -39,21 +38,16 @@ public class MainActivity extends AppCompatActivity {
     private static final int PICTURE_REQUEST = 1;
     static final String PICTURE_NAME = "picture";
     static final String PICTURE_TEXT = "text";
-
-
-
     private ImageView mImageView;
     private Intent mIntent;
-
     private FirebaseVisionTextRecognizer detector;
-
+    private BitmapFactory.Options mOptions;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mImageView = findViewById(R.id.scanner);
-
         detector = FirebaseVision.getInstance().getOnDeviceTextRecognizer();
     }
 
@@ -62,9 +56,6 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             startActivityForResult(intent, PICTURE_REQUEST);
         }
-
-//        Intent intent = new Intent(this, PillContentActivity.class);
-//        startActivity(intent);
     }
 
     // Helper function
@@ -77,9 +68,11 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == PICTURE_REQUEST && resultCode == RESULT_OK && data != null) {
+
             Bundle extras = data.getExtras();
             if (extras != null) {
                 Bitmap bm = (Bitmap) extras.get("data");
+
                 mImageView.setImageBitmap(bm);
 
                 // Move the Bitmap to the next view by converting to byteArray first
@@ -89,10 +82,8 @@ public class MainActivity extends AppCompatActivity {
 
                 mIntent = new Intent(this, PillContentActivity.class);
                 mIntent.putExtra(PICTURE_NAME, byteArray);
-//                startActivity(intent);
 
                 FirebaseVisionImage image = FirebaseVisionImage.fromBitmap(bm);
-
                 Task<FirebaseVisionText> result =
                         detector.processImage(image)
                                 .addOnSuccessListener(new OnSuccessListener<FirebaseVisionText>() {
@@ -101,12 +92,7 @@ public class MainActivity extends AppCompatActivity {
                                         // Task completed successfully
                                         processTextBlock(firebaseVisionText);
 
-                                        // ...
-                                        log("Success");
-                                        Toast.makeText(MainActivity.this, "success!!", Toast.LENGTH_LONG).show();
-
                                         // In the documentation
-
 //                                        for (FirebaseVisionText.TextBlock block : firebaseVisionText.getTextBlocks()) {
 //                                            Rect boundingBox = block.getBoundingBox();
 //                                            Point[] cornerPoints = block.getCornerPoints();
@@ -138,7 +124,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void processTextBlock(FirebaseVisionText result) {
         String resultText = result.getText();
-        log(resultText);
+
         // TODO: pass into PillContectActivity
         mIntent.putExtra(PICTURE_TEXT, resultText);
         startActivity(mIntent);
@@ -146,13 +132,10 @@ public class MainActivity extends AppCompatActivity {
         for (FirebaseVisionText.TextBlock block: result.getTextBlocks()) {
             String blockText = block.getText();
             // Each blockText is a line
-//            Toast.makeText(MainActivity.this, blockText, Toast.LENGTH_LONG).show();
-
             Float blockConfidence = block.getConfidence();
             List<RecognizedLanguage> blockLanguages = block.getRecognizedLanguages();
             Point[] blockCornerPoints = block.getCornerPoints();
             Rect blockFrame = block.getBoundingBox();
-
 
             for (FirebaseVisionText.Line line: block.getLines()) {
                 String lineText = line.getText();

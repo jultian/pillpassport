@@ -2,40 +2,65 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#8BC34A"
+    android:orientation="vertical">
 
     <ImageView
         android:id="@+id/labelPic"
         android:layout_width="fill_parent"
-        android:layout_height="291dp"
+        android:layout_height="236dp"
         android:adjustViewBounds="false"
+        android:contentDescription="image"
         android:scaleType="fitCenter"
-        tools:srcCompat="@tools:sample/backgrounds/scenic[5]" />
+        />
 
-    <Button
-        android:id="@+id/read"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#FFC107"
-        android:onClick="readInfo"
-        android:text="Read" />
+        android:layout_height="231dp"
+        android:background="#009688">
 
-    <Button
-        android:id="@+id/translate"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#8BC34A"
-        android:onClick="translateInfo"
-        android:text="Translate" />
+        <TextView
+            android:id="@+id/info"
+            android:layout_width="252dp"
+            android:layout_height="163dp"
+            android:layout_marginTop="48dp"
+            android:layout_marginBottom="61dp"
+            android:textAlignment="viewStart"
+            android:textColor="#FFFFFF"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.496"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.341" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <TextView
-        android:id="@+id/info"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="334dp"
-        android:background="#3870ED"
-        android:text="PRESCRIPTION NAME:"
-        android:textAlignment="viewStart"
-        android:textColor="#FFFFFF"
-        android:textSize="24sp" />
+        android:layout_height="104dp"
+        android:baselineAligned="true"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/read"
+            android:layout_width="197dp"
+            android:layout_height="match_parent"
+            android:background="#8BC34A"
+            android:onClick="readInfo"
+            android:text="Read"
+            android:textColor="@android:color/white" />
+
+        <Button
+            android:id="@+id/translate"
+            android:layout_width="match_parent"
+            android:layout_height="104dp"
+            android:background="#8BC34A"
+            android:onClick="translateInfo"
+            android:text="Translate"
+            android:textColor="@android:color/white" />
+    </LinearLayout>
+
 </LinearLayout>
