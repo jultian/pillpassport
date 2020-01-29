@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.os.Bundle;
@@ -40,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
     private ImageView mImageView;
     private Intent mIntent;
     private FirebaseVisionTextRecognizer detector;
+    private BitmapFactory.Options mOptions;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
             Bundle extras = data.getExtras();
             if (extras != null) {
                 Bitmap bm = (Bitmap) extras.get("data");
+
                 mImageView.setImageBitmap(bm);
 
                 // Move the Bitmap to the next view by converting to byteArray first
